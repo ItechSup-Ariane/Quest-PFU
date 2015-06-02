@@ -1,0 +1,18 @@
+{% extends '::questionnaire.html.twig'%}
+{% block body %}
+    {{form_start(formQuestinnaire)}}
+    {% for categorie in formQuestinnaire.categories %}
+        <li>{{ form_label(categorie.questions) }}</li>
+            {% for question in categorie.questions %}
+            <label>{{ form_label(question.reponses) }}</label>
+            {% for reponse in question.reponses %}
+                <div class="form_row">
+                    {{ form_widget(reponse.score) }}
+                    {{ form_errors(reponse.score) }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+    <input type='submit'>
+    {{form_end(formQuestinnaire)}}
+{% endblock %}

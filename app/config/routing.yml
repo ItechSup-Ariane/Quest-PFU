@@ -1,0 +1,3 @@
+itech_sup_questionnaire:
+    resource: "@ItechSupQuestionnaireBundle/Resources/config/routing.yml"
+    prefix:   /

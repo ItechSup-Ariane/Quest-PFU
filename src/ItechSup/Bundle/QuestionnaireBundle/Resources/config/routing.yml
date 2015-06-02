@@ -1,0 +1,7 @@
+itech_sup_questionnaire_homepage:
+    path:     /questionnaire
+    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:displayFormulaire}
+
+itech_sup_questionnaire_succes_formulaire:
+    path:     /success_questionnaire
+    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:succesFormulaire}
