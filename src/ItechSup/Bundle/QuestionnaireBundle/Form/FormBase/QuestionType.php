@@ -1,6 +1,6 @@
 <?php
 
-namespace ItechSup\Bundle\QuestionnaireBundle\Form;
+namespace ItechSup\Bundle\QuestionnaireBundle\Form\FormBase;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,9 +36,6 @@ class QuestionType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'ItechSup\Bundle\QuestionnaireBundle\Entity\Question',
-            'empty_data' => function (FormInterface $form) {
-                
-            }
         ));
     }
 

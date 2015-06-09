@@ -1,0 +1,13 @@
+{% extends '::layout.html.twig'%}
+{% block content %}
+    <h1>Liste des questionnaire</h1>
+    <table>
+        {% for questionnaire in questionnaires %}
+            <tr>
+                <td><a href="{{path('itech_sup_questionnaire',{'questionnaire':questionnaire.id}) }}" >{{questionnaire.title()}}</td>
+                {#<td><a href="{{path('',{'slug':questionnaire.id}) }}" >Modifier<a/></td>#}
+                <td><a href="{{path('itech_sup_add_questionnaire',{'questionnaire':questionnaire.id}) }}">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

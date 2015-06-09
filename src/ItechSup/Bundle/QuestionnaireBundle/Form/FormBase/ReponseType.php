@@ -1,21 +1,27 @@
 <?php
 
-namespace ItechSup\Bundle\QuestionnaireBundle\Form;
+namespace ItechSup\Bundle\QuestionnaireBundle\Form\FormBase;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class QuestionnaireType extends AbstractType {
+class ReponseType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $questionnaire = $builder->getData();
-        $builder->add('categories', 'collection', array("label" => $questionnaire->getTitle(),
-            "type" => new CategorieType()));
+        $builder->add('score', 'choice', array(
+            'choices' => array('0' => '0',
+                '1' => '1',
+                '2' => '2',
+                '3' => '3',
+                '4' => '4',
+                '5' => '5'),
+            'multiple' => false,
+            'expanded' => true));
     }
 
     /**
@@ -23,7 +29,7 @@ class QuestionnaireType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire'
+            'data_class' => 'ItechSup\Bundle\QuestionnaireBundle\Entity\Reponse',
         ));
     }
 
@@ -31,7 +37,7 @@ class QuestionnaireType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'itechsup_bundle_questionnairebundle_questionnaire';
+        return 'itechsup_bundle_questionnairebundle_reponse';
     }
 
 }

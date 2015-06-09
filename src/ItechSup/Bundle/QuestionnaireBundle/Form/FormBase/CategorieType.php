@@ -1,6 +1,6 @@
 <?php
 
-namespace ItechSup\Bundle\QuestionnaireBundle\Form;
+namespace ItechSup\Bundle\QuestionnaireBundle\Form\FormBase;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

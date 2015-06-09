@@ -1,5 +1,5 @@
-{% extends '::questionnaire.html.twig'%}
-{% block body %}
+{% extends '::layout.html.twig'%}
+{% block content %}
     {{form_start(formQuestinnaire)}}
     {% for categorie in formQuestinnaire.categories %}
         <li>{{ form_label(categorie.questions) }}</li>

@@ -35,6 +35,12 @@ class Reponse {
     private $question;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\User", inversedBy="reponses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -68,8 +74,16 @@ class Reponse {
         return $this->question;
     }
 
-    public function setQuestion($question) {
+    public function setQuestion(Question $question) {
         $this->question = $question;
+    }
+
+    public function getUser() {
+        return $this->question;
+    }
+
+    public function setUser(User $user) {
+        $this->user = $user;
     }
 
 }
