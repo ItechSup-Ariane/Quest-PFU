@@ -87,4 +87,8 @@ class Question {
         return $this->reponses;
     }
 
+    public function getReponse() {
+        return $this->reponses->first();
+    }
+
 }

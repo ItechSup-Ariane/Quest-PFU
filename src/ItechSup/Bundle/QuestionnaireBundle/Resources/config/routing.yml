@@ -10,18 +10,8 @@ itech_sup_questionnaire:
     path:     /questionnaire/{questionnaire}
     defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:displayQuestionnaire}
     requirements:
-        questionnaire:  \d+
+        questionnaire:  \d+ 
 
-itech_sup_add_questionnaire:
-    path:     /questionnaire/add
-    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:addQuestionnaire}
-
-itech_sup_remove_questionnaire:
-    path:     /questionnaire/remove/{questionnaire}
-    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:removeQuestionnaire}
-    requirements:
-        questionnaire:  \d+
-        
 itech_sup_questionnaire_succes_formulaire:
     path:     /success_questionnaire
     defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:succesFormulaire}

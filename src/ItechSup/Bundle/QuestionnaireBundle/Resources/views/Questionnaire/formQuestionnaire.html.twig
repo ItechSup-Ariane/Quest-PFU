@@ -4,13 +4,11 @@
     {% for categorie in formQuestinnaire.categories %}
         <li>{{ form_label(categorie.questions) }}</li>
             {% for question in categorie.questions %}
-            <label>{{ form_label(question.reponses) }}</label>
-            {% for reponse in question.reponses %}
-                <div class="form_row">
-                    {{ form_widget(reponse.score) }}
-                    {{ form_errors(reponse.score) }}
-                </div>
-            {% endfor %}
+            <label>{{ form_label(question.reponse) }}</label>
+            <div class="form_row">
+                {{ form_widget(question.reponse.score) }}
+                {{ form_errors(question.reponse.score) }}
+            </div>
         {% endfor %}
     {% endfor %}
     <input type='submit'>

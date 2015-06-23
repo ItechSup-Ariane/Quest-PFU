@@ -5,10 +5,6 @@ namespace ItechSup\Bundle\QuestionnaireBundle\Form\FormBase;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use ItechSup\Bundle\QuestionnaireBundle\Entity\Reponse;
 
 class QuestionType extends AbstractType {
 
@@ -17,17 +13,7 @@ class QuestionType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('reponses', 'collection', array('label' => 'question',
-            'type' => new ReponseType(),
-            'allow_add' => false,
-            'allow_delete' => false
-        ));
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-            $question = $event->getData();
-            if ($question->getReponses()->isEmpty()) {
-                $question->addReponse(new Reponse());
-            }
-        });
+        $builder->add('reponse', new ReponseType(), array('label' => 'question'));
     }
 
     /**
