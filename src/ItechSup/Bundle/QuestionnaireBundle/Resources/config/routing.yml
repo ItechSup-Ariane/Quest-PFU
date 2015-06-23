@@ -1,3 +1,7 @@
+itech_sup_index:
+    path:     /
+    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:indexQuestionnaire}
+
 itech_sup_list_questionnaire:
     path:     /questionnaires
     defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:listQuestionnaire}

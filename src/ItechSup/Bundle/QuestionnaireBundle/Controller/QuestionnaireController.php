@@ -9,6 +9,10 @@ use ItechSup\Bundle\QuestionnaireBundle\Form\FormBase\QuestionnaireType;
 
 class QuestionnaireController extends Controller {
 
+    public function indexQuestionnaireAction() {
+        return $this->render('ItechSupQuestionnaireBundle:Questionnaire:indexQuestionnaire.html.twig');
+    }
+
     public function listQuestionnaireAction() {
         $repositoryQuestionnaire = $this->getDoctrine()
                 ->getManager()
