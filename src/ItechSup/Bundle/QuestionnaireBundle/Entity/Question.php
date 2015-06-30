@@ -91,4 +91,10 @@ class Question {
         return $this->reponses->first();
     }
 
+    public function hasReponseUser($userId) {
+        return $this->reponses->exists(function ($key, $value) use ($userId) {
+                    return $value->getUser()->getId() == $userId;
+                });
+    }
+
 }

@@ -1,0 +1,33 @@
+{% extends 'ItechSupQuestionnaireBundle::layout.html.twig'%}
+{% block content %}
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#questionnaires" aria-controls="questionnaire" role="tab" data-toggle="tab">Questionnaires</a></li>
+            <li role="presentation"><a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Categories</a></li>
+            <li role="presentation"><a href="#questions" aria-controls="questions" role="tab" data-toggle="tab">Questions</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="questionnaire">
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="categories">
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="questions">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        $('#myTabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+            console.log("ok");
+        })
+    </script>
+{% endblock %}

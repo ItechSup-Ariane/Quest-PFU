@@ -1,17 +1,66 @@
-itech_sup_index:
-    path:     /
-    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:indexQuestionnaire}
-
+ #
+ # Route  for questionnaire
+ #
 itech_sup_list_questionnaire:
     path:     /questionnaires
-    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:listQuestionnaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:UserQuestionnaire:indexQuestionnaire}
+
+itech_sup_gestion:
+    path:     /gestion
+    defaults: { _controller: ItechSupQuestionnaireBundle:UserQuestionnaire:indexGestion}
 
 itech_sup_questionnaire:
     path:     /questionnaire/{questionnaire}
-    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:displayQuestionnaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:UserQuestionnaire:displayQuestionnaire}
     requirements:
         questionnaire:  \d+ 
 
 itech_sup_questionnaire_succes_formulaire:
     path:     /success_questionnaire
-    defaults: { _controller: ItechSupQuestionnaireBundle:Questionnaire:succesFormulaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:UserQuestionnaire:succesFormulaire}
+
+ #
+ # Route  for gestion questionnaire
+ #
+itech_sup_gestionnaire_list_questionnaire:
+    path:     /gestion/questionnaires
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:listQuestionnaire}
+
+itech_sup_gestionnaire_add_questionnaire:
+    path:     /gestion/questionnaire/add
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:addQuestionnaire}
+
+itech_sup_gestionnaire_remove_questionnaire:
+    path:     /gestion/questionnaire/remove/{questionnaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:removeQuestionnaire}
+    requirements:
+        questionnaire:  \d+ 
+        
+itech_sup_gestionnaire_update_questionnaire:
+    path:     /gestion/questionnaire/update/{questionnaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:updateQuestionnaire}
+    requirements:
+        questionnaire:  \d+ 
+        
+#
+# Route  for gestion categorie
+#
+itech_sup_gestionnaire_list_categorie:
+    path:     /gestion/categories
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:listQuestionnaire}
+
+itech_sup_gestionnaire_add_categorie:
+    path:     /gestion/categorie/add
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:addQuestionnaire}
+
+itech_sup_gestionnaire_remove_categorie:
+    path:     /gestion/categorie/remove/{questionnaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:removeQuestionnaire}
+    requirements:
+        questionnaire:  \d+ 
+        
+itech_sup_gestionnaire_update_:
+    path:     /gestion/categorie/update/{questionnaire}
+    defaults: { _controller: ItechSupQuestionnaireBundle:Gestion:updateQuestionnaire}
+    requirements:
+        questionnaire:  \d+ 

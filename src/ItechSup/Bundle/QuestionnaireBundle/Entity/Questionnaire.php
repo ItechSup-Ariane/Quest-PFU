@@ -55,9 +55,13 @@ class Questionnaire {
         $this->title = $title;
     }
 
-        
     public function addCategorie(Categorie $categorie) {
-        $this->applications[] = $categorie;
+        $this->categories[] = $categorie;
+        return $this;
+    }
+
+    public function setCategories(ArrayCollection $categorie) {
+        $this->categories = $categorie;
         return $this;
     }
 
