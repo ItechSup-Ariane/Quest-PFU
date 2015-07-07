@@ -7,10 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ItechSup\Bundle\QuestionnaireBundle\Entity\UserRepository")
  * @ORM\Table(name="fos_user")
  */
-class User extends BaseUser {
+class User extends BaseUser
+{
 
     /**
      * @ORM\Id
@@ -24,22 +25,26 @@ class User extends BaseUser {
      */
     private $reponses;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->reponses = new ArrayCollection();
     }
 
-    public function addReponse(Reponse $reponse) {
+    public function addReponse(Reponse $reponse)
+    {
         $reponse->setUser($this);
         $this->reponses[] = $reponse;
         return $this;
     }
 
-    public function removeReponse(Reponse $reponse) {
+    public function removeReponse(Reponse $reponse)
+    {
         $this->reponses->removeElement($reponse);
     }
 
-    public function getReponses() {
+    public function getReponses()
+    {
         return $this->reponses;
     }
 

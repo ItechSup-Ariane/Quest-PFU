@@ -4,45 +4,42 @@ namespace ItechSup\Bundle\QuestionnaireBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use ItechSup\Bundle\QuestionnaireBundle\Entity\Categorie;
+use ItechSup\Bundle\QuestionnaireBundle\Form\FormEdit\CategorieType;
 
-class CategorieController extends Controller {
+class CategorieController extends Controller
+{
 
-    public function listCategorieAction() {
-        $userId = $this->getUser()->getId();
-        $repositoryQuestionnaire = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('ItechSupQuestionnaireBundle:Questionnaire');
-        $questionnaires = $repositoryQuestionnaire->questionnaireByUserWithoutReponse($userId);
-        return $this->render('ItechSupQuestionnaireBundle:Questionnaire:listQuestionnaire.html.twig', array("questionnaires" => $questionnaires));
-    }
-
-    public function addCategorieAction(Request $request) {
-        $form = $this->createForm(new QuestionnaireType());
+    public function addCategorieAction(Request $request)
+    {
+        $form = $this->createForm(new CategorieType());
         if ($form->handleRequest($request)->isValid() && $form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
-            return $this->redirect($this->generateUrl("itech_sup_gestionnaire_list_questionnaire"));
+            return $this->redirect($this->generateUrl("itech_sup_gestion"));
         }
-        return $this->render('ItechSupQuestionnaireBundle:Gestionnaire:formQuestionnaire.html.twig', array("addForm" => $form->createView()));
+        return $this->render('ItechSupQuestionnaireBundle:Categorie:formCategorie.html.twig', array("addForm" => $form->createView()));
     }
 
-    public function updateCategorieAction(Questionnaire $questionnaire, Request $request) {
-        $form = $this->createForm(new QuestionnaireType(), $questionnaire);
+    public function updateCategorieAction(Categorie $categorie, Request $request)
+    {
+        $form = $this->createForm(new CategorieType(), $categorie);
         if ($form->handleRequest($request)->isValid() && $form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
-            return $this->redirect($this->generateUrl("itech_sup_gestionnaire_list_questionnaire"));
+            return $this->redirect($this->generateUrl("itech_sup_gestion"));
         }
-        return $this->render('ItechSupQuestionnaireBundle:Gestionnaire:formQuestionnaire.html.twig', array("addForm" => $form->createView()));
+        return $this->render('ItechSupQuestionnaireBundle:Categorie:formCategorie.html.twig', array("addForm" => $form->createView()));
     }
 
-    public function removeCategorieAction(Questionnaire $questionnaire) {
+    public function removeCategorieAction(Categorie $categorie)
+    {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($questionnaire);
+        $em->remove($categorie);
         $em->flush();
-        return $this->redirect($this->generateUrl("itech_sup_gestionnaire_list_questionnaire"));
+        return $this->redirect($this->generateUrl("itech_sup_gestion"));
     }
 
 }

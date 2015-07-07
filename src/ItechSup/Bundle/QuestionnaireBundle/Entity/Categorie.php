@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="ItechSup\Bundle\QuestionnaireBundle\Entity\CategorieRepository")
 
  */
-class Categorie {
+class Categorie
+{
 
     /**
      * @var integer
@@ -32,7 +33,7 @@ class Categorie {
 
     /**
      * @ORM\ManyToOne(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire", inversedBy="categories")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $questionnaire;
 
@@ -41,7 +42,8 @@ class Categorie {
      */
     private $questions;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->questions = new ArrayCollection();
     }
 
@@ -50,7 +52,8 @@ class Categorie {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -60,7 +63,8 @@ class Categorie {
      * @param string $title
      * @return Categorie
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
@@ -71,28 +75,34 @@ class Categorie {
      *
      * @return string 
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function getQuestionnaire() {
+    public function getQuestionnaire()
+    {
         return $this->questionnaire;
     }
 
-    public function setQuestionnaire(Questionnaire $questionnaire) {
+    public function setQuestionnaire(Questionnaire $questionnaire)
+    {
         $this->questionnaire = $questionnaire;
     }
 
-    public function addQuestion(Question $question) {
+    public function addQuestion(Question $question)
+    {
         $this->questions[] = $question;
         return $this;
     }
 
-    public function removeQuestion(Question $question) {
+    public function removeQuestion(Question $question)
+    {
         $this->questions->removeElement($question);
     }
 
-    public function getQuestions() {
+    public function getQuestions()
+    {
         return $this->questions;
     }
 

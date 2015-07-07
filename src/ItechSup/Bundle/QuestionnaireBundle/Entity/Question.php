@@ -11,7 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ItechSup\Bundle\QuestionnaireBundle\Entity\QuestionRepository")
  */
-class Question {
+class Question
+{
 
     /**
      * @var integer
@@ -31,7 +32,7 @@ class Question {
 
     /**
      * @ORM\ManyToOne(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Categorie", inversedBy="questions")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categorie;
 
@@ -45,11 +46,13 @@ class Question {
      *
      * @return integer 
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->reponses = new ArrayCollection();
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -59,7 +62,8 @@ class Question {
      * @param string $title
      * @return Question
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
         return $this;
     }
@@ -69,32 +73,48 @@ class Question {
      *
      * @return string 
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function addReponse(Reponse $reponse) {
+    public function addReponse(Reponse $reponse)
+    {
         $reponse->setQuestion($this);
         $this->reponses[] = $reponse;
         return $this;
     }
 
-    public function removeReponse(Reponse $reponse) {
+    public function removeReponse(Reponse $reponse)
+    {
         $this->reponses->removeElement($reponse);
     }
 
-    public function getReponses() {
+    public function getReponses()
+    {
         return $this->reponses;
     }
 
-    public function getReponse() {
+    public function getReponse()
+    {
         return $this->reponses->first();
     }
 
-    public function hasReponseUser($userId) {
+    public function hasReponseUser($userId)
+    {
         return $this->reponses->exists(function ($key, $value) use ($userId) {
                     return $value->getUser()->getId() == $userId;
                 });
+    }
+
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(Categorie $categorie)
+    {
+        $this->categorie = $categorie;
     }
 
 }

@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ItechSup\Bundle\QuestionnaireBundle\Entity\QuestionnaireRepository")
  */
-class Questionnaire {
+class Questionnaire
+{
 
     /**
      * @var integer
@@ -34,7 +35,8 @@ class Questionnaire {
      */
     private $categories;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->categories = new ArrayCollection();
     }
 
@@ -43,33 +45,40 @@ class Questionnaire {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
-    public function addCategorie(Categorie $categorie) {
+    public function addCategorie(Categorie $categorie)
+    {
         $this->categories[] = $categorie;
         return $this;
     }
 
-    public function setCategories(ArrayCollection $categorie) {
+    public function setCategories(ArrayCollection $categorie)
+    {
         $this->categories = $categorie;
         return $this;
     }
 
-    public function removeCategorie(Categorie $categorie) {
+    public function removeCategorie(Categorie $categorie)
+    {
         $this->applications->removeElement($categorie);
     }
 
-    public function getCategories() {
+    public function getCategories()
+    {
         return $this->categories;
     }
 

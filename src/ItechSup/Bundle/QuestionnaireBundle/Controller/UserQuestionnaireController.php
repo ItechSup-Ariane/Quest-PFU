@@ -8,9 +8,11 @@ use ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire;
 use ItechSup\Bundle\QuestionnaireBundle\Form\FormBase\QuestionnaireType;
 use ItechSup\Bundle\QuestionnaireBundle\Entity\Reponse;
 
-class UserQuestionnaireController extends Controller {
+class UserQuestionnaireController extends Controller
+{
 
-    public function indexQuestionnaireAction() {
+    public function indexQuestionnaireAction()
+    {
         $userId = $this->getUser()->getId();
         $repositoryQuestionnaire = $this->getDoctrine()
                 ->getManager()
@@ -19,7 +21,8 @@ class UserQuestionnaireController extends Controller {
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexQuestionnaire.html.twig', array("questionnaires" => $questionnaires));
     }
 
-    public function indexGestionAction() {
+    public function indexGestionAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $questionnaireRepository = $em->getRepository('ItechSupQuestionnaireBundle:Questionnaire');
         $categorieRepository = $em->getRepository('ItechSupQuestionnaireBundle:Categorie');
@@ -27,12 +30,13 @@ class UserQuestionnaireController extends Controller {
         $questionnaires = $questionnaireRepository->findAll();
         $categories = $categorieRepository->findAll();
         $questions = $questionRepository->findAll();
-        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexGestion.html.twig', array("questionnaire" => $questionnaires,
+        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexGestion.html.twig', array("questionnaires" => $questionnaires,
                     "categories" => $categories,
-                    "question" => $questions));
+                    "questions" => $questions));
     }
 
-    public function displayQuestionnaireAction(Questionnaire $questionnaire, Request $request) {
+    public function displayQuestionnaireAction(Questionnaire $questionnaire, Request $request)
+    {
         $user = $this->getUser();
         foreach ($questionnaire->getCategories() as $categorie) {
             foreach ($categorie->getQuestions() as $question) {
@@ -55,7 +59,8 @@ class UserQuestionnaireController extends Controller {
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:formQuestionnaire.html.twig', array("formQuestinnaire" => $form->createView()));
     }
 
-    public function succesFormulaireAction() {
+    public function succesFormulaireAction()
+    {
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:succesForm.html.twig');
     }
 

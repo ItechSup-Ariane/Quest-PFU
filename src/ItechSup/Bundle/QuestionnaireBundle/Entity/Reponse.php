@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ItechSup\Bundle\QuestionnaireBundle\Entity\ResponseRepository")
  */
-class Reponse {
+class Reponse
+{
 
     /**
      * @var integer
@@ -45,7 +46,8 @@ class Reponse {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -55,7 +57,8 @@ class Reponse {
      * @param integer $score
      * @return Response
      */
-    public function setScore($score) {
+    public function setScore($score)
+    {
         $this->score = $score;
 
         return $this;
@@ -66,23 +69,28 @@ class Reponse {
      *
      * @return integer 
      */
-    public function getScore() {
+    public function getScore()
+    {
         return $this->score;
     }
 
-    public function getQuestion() {
+    public function getQuestion()
+    {
         return $this->question;
     }
 
-    public function setQuestion(Question $question) {
+    public function setQuestion(Question $question)
+    {
         $this->question = $question;
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         return $this->question;
     }
 
-    public function setUser(User $user) {
+    public function setUser(User $user)
+    {
         $this->user = $user;
     }
 
