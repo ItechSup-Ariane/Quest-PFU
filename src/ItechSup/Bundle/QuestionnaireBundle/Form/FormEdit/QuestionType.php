@@ -17,7 +17,9 @@ class QuestionType extends AbstractType
     {
         $builder->add('title', 'text', array('label' => 'question'));
         $builder->add('categorie', 'entity', array('class' => 'ItechSup\Bundle\QuestionnaireBundle\Entity\Categorie',
-            'property' => 'title'
+            'property' => 'title',
+            'empty_value' => 'Choisissez un questionnaire',
+            'empty_data' => null
         ));
     }
 
