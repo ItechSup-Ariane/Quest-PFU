@@ -11,6 +11,23 @@ use ItechSup\Bundle\QuestionnaireBundle\Entity\Reponse;
 class UserQuestionnaireController extends Controller
 {
 
+    /**
+     * redirige les utilisateurs sur le page index selon leur droits
+     */
+    public function indexAction()
+    {
+        if (true === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl("itech_sup_gestion"));
+        } elseif (true === $this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl("itech_sup_list_questionnaire"));
+        } else {
+            return $this->redirect($this->generateUrl("fos_user_security_login"));
+        }
+    }
+
+    /**
+     * retourne la liste des questionnaire disponnible à un utilisateur
+     */
     public function indexQuestionnaireAction()
     {
         $userId = $this->getUser()->getId();
@@ -21,6 +38,9 @@ class UserQuestionnaireController extends Controller
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexQuestionnaire.html.twig', array("questionnaires" => $questionnaires));
     }
 
+    /**
+     * page de gestion pour les quesitonnaire
+     */
     public function indexGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -35,6 +55,12 @@ class UserQuestionnaireController extends Controller
                     "questions" => $questions));
     }
 
+    /**
+     * Affiche le nouveau questionnaire et enregistre les données du formaulaire
+     * @param Questionnaire $questionnaire
+     * @param Request $request
+     * @return type
+     */
     public function displayQuestionnaireAction(Questionnaire $questionnaire, Request $request)
     {
         $user = $this->getUser();
@@ -59,6 +85,10 @@ class UserQuestionnaireController extends Controller
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:formQuestionnaire.html.twig', array("formQuestinnaire" => $form->createView()));
     }
 
+    /**
+     * page de confirmation du questionnaire
+     * @return type
+     */
     public function succesFormulaireAction()
     {
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:succesForm.html.twig');

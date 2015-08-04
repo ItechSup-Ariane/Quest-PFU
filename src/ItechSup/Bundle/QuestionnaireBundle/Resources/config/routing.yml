@@ -2,6 +2,10 @@
  # Route  for questionnaire
  #
 itech_sup_list_questionnaire:
+    path:     /
+    defaults: { _controller: ItechSupQuestionnaireBundle:UserQuestionnaire:index}
+
+itech_sup_list_questionnaire:
     path:     /questionnaires
     defaults: { _controller: ItechSupQuestionnaireBundle:UserQuestionnaire:indexQuestionnaire}
 
