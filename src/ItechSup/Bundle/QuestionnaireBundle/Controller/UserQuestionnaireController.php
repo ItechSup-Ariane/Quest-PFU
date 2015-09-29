@@ -3,23 +3,21 @@
 namespace ItechSup\Bundle\QuestionnaireBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire;
-use ItechSup\Bundle\QuestionnaireBundle\Form\FormBase\QuestionnaireType;
-use ItechSup\Bundle\QuestionnaireBundle\Entity\Reponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class UserQuestionnaireController extends Controller
 {
 
     /**
      * redirige les utilisateurs sur le page index selon leur droits
+     * @Route("/")
      */
     public function indexAction()
     {
         if (true === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl("itech_sup_gestion"));
+            return $this->listeQuestionnaireAction();
         } elseif (true === $this->get('security.context')->isGranted('ROLE_USER')) {
-            return $this->redirect($this->generateUrl("itech_sup_list_questionnaire"));
+            return $this->gestionQuetionnaireAction();
         } else {
             return $this->redirect($this->generateUrl("fos_user_security_login"));
         }
@@ -28,7 +26,7 @@ class UserQuestionnaireController extends Controller
     /**
      * retourne la liste des questionnaire disponnible à un utilisateur
      */
-    public function indexQuestionnaireAction()
+    public function listeQuestionnaireAction()
     {
         $userId = $this->getUser()->getId();
         $repositoryQuestionnaire = $this->getDoctrine()
@@ -41,7 +39,7 @@ class UserQuestionnaireController extends Controller
     /**
      * page de gestion pour les quesitonnaire
      */
-    public function indexGestionAction()
+    public function gestionQuetionnaireAction()
     {
         $em = $this->getDoctrine()->getManager();
         $questionnaireRepository = $em->getRepository('ItechSupQuestionnaireBundle:Questionnaire');
@@ -53,45 +51,6 @@ class UserQuestionnaireController extends Controller
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexGestion.html.twig', array("questionnaires" => $questionnaires,
                     "categories" => $categories,
                     "questions" => $questions));
-    }
-
-    /**
-     * Affiche le nouveau questionnaire et enregistre les données du formaulaire
-     * @param Questionnaire $questionnaire
-     * @param Request $request
-     * @return type
-     */
-    public function displayQuestionnaireAction(Questionnaire $questionnaire, Request $request)
-    {
-        $user = $this->getUser();
-        foreach ($questionnaire->getCategories() as $categorie) {
-            foreach ($categorie->getQuestions() as $question) {
-                if (!$question->hasReponseUser($user->getId())) {
-                    $reponse = new Reponse();
-                    $reponse->setUser($user);
-                    $question->addReponse($reponse);
-                } else {
-                    return $this->redirect($this->generateUrl("itech_sup_index"));
-                }
-            }
-        }
-        $form = $this->createForm(new QuestionnaireType(), $questionnaire);
-        if ($form->handleRequest($request)->isValid() && $form->isSubmitted()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
-            $em->flush();
-            return $this->redirect($this->generateUrl("itech_sup_questionnaire_succes_formulaire"));
-        }
-        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:formQuestionnaire.html.twig', array("formQuestinnaire" => $form->createView()));
-    }
-
-    /**
-     * page de confirmation du questionnaire
-     * @return type
-     */
-    public function succesFormulaireAction()
-    {
-        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:succesForm.html.twig');
     }
 
 }

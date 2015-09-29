@@ -16,11 +16,6 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array('label' => 'question'));
-        $builder->add('categorie', 'entity', array('class' => 'ItechSup\Bundle\QuestionnaireBundle\Entity\Categorie',
-            'property' => 'title',
-            'empty_value' => 'Choisissez un questionnaire',
-            'empty_data' => null
-        ));
     }
 
     /**

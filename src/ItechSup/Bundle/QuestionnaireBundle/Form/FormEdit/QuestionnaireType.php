@@ -16,6 +16,12 @@ class QuestionnaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array("label" => "Titre"));
+        $builder->add('categories', 'collection', array(
+            "type" => new CategorieType(),
+            'prototype_name' => "__categories_prot__",
+            'allow_add' => true,
+            'by_reference' => false,
+            'allow_delete' => true));
     }
 
     /**

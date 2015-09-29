@@ -32,13 +32,13 @@ class Categorie
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire", inversedBy="categories")
+     * @ORM\ManyToOne(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire", inversedBy="categories",cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $questionnaire;
 
     /**
-     * @ORM\OneToMany(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Question", mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Question", mappedBy="categorie", cascade={"persist"})
      */
     private $questions;
 
@@ -92,8 +92,8 @@ class Categorie
 
     public function addQuestion(Question $question)
     {
+        $question->setCategorie($this);
         $this->questions[] = $question;
-        return $this;
     }
 
     public function removeQuestion(Question $question)

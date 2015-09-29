@@ -5,6 +5,7 @@ namespace ItechSup\Bundle\QuestionnaireBundle\Form\FormEdit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use ItechSup\Bundle\QuestionnaireBundle\Form\FormEdit\QuestionType;
 
 class CategorieType extends AbstractType
 {
@@ -16,11 +17,12 @@ class CategorieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array("label" => 'Titre'));
-        $builder->add('questionnaire', 'entity', array('class' => 'ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire',
-            'property' => 'title',
-            'empty_value' => 'Choisissez un questionnaire',
-            'empty_data' => null
-        ));
+        $builder->add('questions', 'collection', array('type' => new QuestionType(),
+            'prototype_name' => "__questions_prot__",
+            'label' => '',
+            'allow_add' => true,
+            'by_reference' => false,
+            'allow_delete' => true));
     }
 
     /**

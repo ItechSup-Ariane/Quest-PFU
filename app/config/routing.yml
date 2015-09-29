@@ -1,6 +1,7 @@
 itech_sup_questionnaire:
-    resource: "@ItechSupQuestionnaireBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@ItechSupQuestionnaireBundle/Controller/"
+    type: annotation
+    prefix: /
     
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

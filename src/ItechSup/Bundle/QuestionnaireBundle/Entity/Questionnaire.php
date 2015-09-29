@@ -31,7 +31,7 @@ class Questionnaire
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Categorie", mappedBy="questionnaire")
+     * @ORM\OneToMany(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Categorie", mappedBy="questionnaire",cascade={"persist"})
      */
     private $categories;
 
@@ -60,26 +60,21 @@ class Questionnaire
         $this->title = $title;
     }
 
-    public function addCategorie(Categorie $categorie)
+    public function addCategory(Categorie $categorie)
     {
+        $categorie->setQuestionnaire($this);
         $this->categories[] = $categorie;
         return $this;
     }
 
-    public function setCategories(ArrayCollection $categorie)
-    {
-        $this->categories = $categorie;
-        return $this;
-    }
-
-    public function removeCategorie(Categorie $categorie)
+    public function removeCategory(Categorie $categorie)
     {
         $this->applications->removeElement($categorie);
     }
 
     public function getCategories()
     {
-        return $this->categories;
+        return $this->categories->toArray();
     }
 
 }
