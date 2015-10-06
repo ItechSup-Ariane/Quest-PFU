@@ -26,4 +26,14 @@ class QuestionnaireRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function listQuestionnairesSubmit()
+    {
+        $query = $this->createQueryBuilder('q')
+                ->join("q.categories", "c")
+                ->join("c.questions", "cq")
+                ->join("cq.reponses", "r")
+                ->getQuery();
+        return $query->getResult();
+    }
+
 }

@@ -1,0 +1,26 @@
+{% extends 'ItechSupQuestionnaireBundle::layout.html.twig'%}
+{% block content %}
+    <h1>Liste des questionnaire</h1>
+    {% if not questionnaires is empty %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du questionnaire</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for questionnaire in questionnaires %}
+                    <tr>
+                        <td>{{questionnaire.title()}}</td>
+                        <td><a href="{{path('itechsup_questionnaire_questionnaire_updatequestionnaire',{'questionnaire':questionnaire.id}) }}" >Modifer</a></td>
+                        <td><a href="{{path('itechsup_questionnaire_questionnaire_deletequestionnaire',{'questionnaire':questionnaire.id}) }}" >Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else%}
+        <p>Aucun questionnaire disponnible</p>
+    {% endif %}
+{% endblock %}

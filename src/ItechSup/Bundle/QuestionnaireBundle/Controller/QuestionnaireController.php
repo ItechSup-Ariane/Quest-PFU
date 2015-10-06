@@ -5,7 +5,8 @@ namespace ItechSup\Bundle\QuestionnaireBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use ItechSup\Bundle\QuestionnaireBundle\Form\FormBase\QuestionnaireType;
+use ItechSup\Bundle\QuestionnaireBundle\Form\FormEdit\QuestionnaireType as QuestionnaireTypeEdit;
+use ItechSup\Bundle\QuestionnaireBundle\Form\FormBase\QuestionnaireType as QuestionnaireTypeBase;
 use ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire;
 use ItechSup\Bundle\QuestionnaireBundle\Entity\Reponse;
 
@@ -16,23 +17,56 @@ class QuestionnaireController extends Controller
      * Ajoute un nouveau formulaire
      * @Route("/add/questionnaire")
      * @param Request $request
-     * @return type
+     * @return mixed
      */
     public function addQuestionnaireAction(Request $request)
     {
-        $form = $this->createForm(new QuestionnaireType());
+        $form = $this->createForm(new QuestionnaireTypeEdit());
         if ($form->handleRequest($request)->isValid() && $form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
-            return $this->redirect($this->generateUrl("itech_sup_gestionnaire_form2"));
+            return $this->redirect($this->generateUrl("itechsup_questionnaire_userquestionnaire_index"));
         }
-        return $this->render('ItechSupQuestionnaireBundle:Questionnaire:formQuestionnaire2.html.twig', array("addForm" => $form->createView()));
+        return $this->render('ItechSupQuestionnaireBundle:Questionnaire:addQuestionnaire.html.twig', array("addForm" => $form->createView()));
     }
 
     /**
-     * Affiche le nouveau questionnaire et enregistre les données du formaulaire
+     * mise à jour d'un formulaire
+     * @Route("/update/questionnaire/{questionnaire}", requirements={"questionnaire": "\d+"})
+     * @param Questionnaire $questionnaires
+     * @return mixed
+     */
+    public function updateQuestionnaireAction(Request $request, Questionnaire $questionnaire)
+    {
+        $form = $this->createForm(new QuestionnaireTypeEdit(), $questionnaire);
+        if ($form->handleRequest($request)->isValid() && $form->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+            return $this->redirect($this->generateUrl("itechsup_questionnaire_userquestionnaire_index"));
+        }
+        return $this->render('ItechSupQuestionnaireBundle:Questionnaire:updateQuestionnaire.html.twig', array("formQuestinnaire" => $form->createView()));
+    }
+
+    /**
+     * Supprimer un formulaire
+     * @Route("/delete/questionnaire/{questionnaire}", requirements={"questionnaire": "\d+"})
+     * @param Questionnaire $questionnaire
+     * @return mixed
+     */
+    public function deleteQuestionnaireAction(Questionnaire $questionnaire)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($questionnaire);
+        $em->flush();
+        return $this->redirect($this->generateUrl("itechsup_questionnaire_userquestionnaire_index"));
+    }
+
+    /**
+     * Affiche le formulaire à remplir à l'utilisateur
      * @Route("/edit/questionnaire/{questionnaire}", requirements={"questionnaire": "\d+"})
+     * @param Questionnaire $questionnaire
      */
     public function editQuestionnaireAction(Questionnaire $questionnaire, Request $request)
     {
@@ -44,18 +78,18 @@ class QuestionnaireController extends Controller
                     $reponse->setUser($user);
                     $question->addReponse($reponse);
                 } else {
-                    return $this->redirect($this->generateUrl("itech_sup_index"));
+                    return $this->redirect($this->generateUrl("itechsup_questionnaire_userquestionnaire_index"));
                 }
             }
         }
-        $form = $this->createForm(new QuestionnaireType(), $questionnaire);
+        $form = $this->createForm(new QuestionnaireTypeBase(), $questionnaire);
         if ($form->handleRequest($request)->isValid() && $form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
-            return $this->redirect($this->generateUrl("itech_sup_questionnaire_succes_formulaire"));
+            return $this->redirect($this->generateUrl("itechsup_questionnaire_userquestionnaire_index"));
         }
-        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:formQuestionnaire.html.twig', array("formQuestinnaire" => $form->createView()));
+        return $this->render('ItechSupQuestionnaireBundle:Questionnaire:editQuestionnaire.html.twig', array("formQuestinnaire" => $form->createView()));
     }
 
 }

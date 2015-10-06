@@ -38,7 +38,7 @@ class Categorie
     private $questionnaire;
 
     /**
-     * @ORM\OneToMany(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Question", mappedBy="categorie", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ItechSup\Bundle\QuestionnaireBundle\Entity\Question", mappedBy="categorie", cascade={"persist", "remove"})
      */
     private $questions;
 

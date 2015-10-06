@@ -4,6 +4,7 @@ namespace ItechSup\Bundle\QuestionnaireBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use ItechSup\Bundle\QuestionnaireBundle\Entity\Questionnaire;
 
 class UserQuestionnaireController extends Controller
 {
@@ -15,9 +16,9 @@ class UserQuestionnaireController extends Controller
     public function indexAction()
     {
         if (true === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            return $this->listeQuestionnaireAction();
-        } elseif (true === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->gestionQuetionnaireAction();
+        } elseif (true === $this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->listeQuestionnaireAction();
         } else {
             return $this->redirect($this->generateUrl("fos_user_security_login"));
         }
@@ -25,14 +26,12 @@ class UserQuestionnaireController extends Controller
 
     /**
      * retourne la liste des questionnaire disponnible à un utilisateur
+     * redirige les utilisateurs sur le page index selon leur droits
      */
     public function listeQuestionnaireAction()
     {
         $userId = $this->getUser()->getId();
-        $repositoryQuestionnaire = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('ItechSupQuestionnaireBundle:Questionnaire');
-        $questionnaires = $repositoryQuestionnaire->questionnaireByUserWithoutReponse($userId);
+        $questionnaires = $this->getQuestionnaireRepository()->questionnaireByUserWithoutReponse($userId);
         return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexQuestionnaire.html.twig', array("questionnaires" => $questionnaires));
     }
 
@@ -41,16 +40,38 @@ class UserQuestionnaireController extends Controller
      */
     public function gestionQuetionnaireAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $questionnaireRepository = $em->getRepository('ItechSupQuestionnaireBundle:Questionnaire');
-        $categorieRepository = $em->getRepository('ItechSupQuestionnaireBundle:Categorie');
-        $questionRepository = $em->getRepository('ItechSupQuestionnaireBundle:Question');
-        $questionnaires = $questionnaireRepository->findAll();
-        $categories = $categorieRepository->findAll();
-        $questions = $questionRepository->findAll();
-        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexGestion.html.twig', array("questionnaires" => $questionnaires,
-                    "categories" => $categories,
-                    "questions" => $questions));
+        $questionnaires = $this->getQuestionnaireRepository()->findAll();
+        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:indexGestionQuestionnaire.html.twig', array("questionnaires" => $questionnaires));
+    }
+
+    /**
+     * page de gestion pour les quesitonnaire
+     * @Route("/gestion/list/questionnaires/submit")
+     */
+    public function listQuetionnaireSubmitAction()
+    {
+        $questionnaires = $this->getQuestionnaireRepository()->listQuestionnairesSubmit();
+        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:listQuestionnaireSubmit.html.twig', array("questionnaires" => $questionnaires));
+    }
+    
+    /**
+     * page de gestion pour les quesitonnaire
+     * @Route("/gestion/list/questionnaires/submit")
+     */
+    public function quetionnaireSubmitAction(Questionnaire $questionnaire)
+    {
+        return $this->render('ItechSupQuestionnaireBundle:UserQuestionnaire:listQuestionnaireSubmit.html.twig', array("questionnaires" => $questionnaire));
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    private function getQuestionnaireRepository()
+    {
+        return $repositoryQuestionnaire = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('ItechSupQuestionnaireBundle:Questionnaire');
     }
 
 }

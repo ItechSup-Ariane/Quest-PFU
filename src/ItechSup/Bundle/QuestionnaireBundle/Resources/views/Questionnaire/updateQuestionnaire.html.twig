@@ -1,0 +1,122 @@
+{% extends 'ItechSupQuestionnaireBundle::layout.html.twig'%}
+{% block content %}
+    <h1>Ajouter un catégorie</h1>
+    {{ form_start(formQuestinnaire) }}
+    <ul class="categories" data-prototype="{{ form_widget(formQuestinnaire.categories.vars.prototype)|e }}" >
+    </ul>
+    <input type="submit" value="Créer" class="btn btn-success pull-right" />
+    {{ form_end(formQuestinnaire) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        function Form() {
+            this.name;
+            this.element;
+            this.prototypeName;
+            this.collectionHolder;
+            this.formBind;
+            this.linkValue = "Add";
+            this.classValue = "add";
+            this.isBindForm = false;
+
+            //getter/setter
+            this.getElement = function () {
+                return this.element;
+            };
+
+            this.setElement = function (element) {
+                this.element = element;
+                return this;
+
+            };
+
+            this.getName = function () {
+                return this.name;
+            };
+
+            this.setName = function (name) {
+                this.name = name;
+                return this;
+            };
+
+            this.setPrototypeName = function (prototypeName) {
+                this.prototypeName = prototypeName;
+                return this;
+            };
+
+            this.getPrototypeName = function () {
+                return this.prototypeName;
+            };
+
+            this.build = function () {
+                this.collectionHolder = $(this.element);
+                if (this.isBindForm) {
+                    this.collectionHolder.append('<ul></ul>');
+                    this.collectionHolder = this.collectionHolder.children('ul').data('prototype', this.collectionHolder.data('prototype'));
+                    $(this.element).data('prototype', '');
+                }
+                this.collectionHolder.data('index', this.collectionHolder.find(':input').length);
+                var link = this.createLink(this.linkValue, this.classValue);
+                this.collectionHolder.append(link);
+                link.on('click', this, function (event) {
+                    event.data.addForm();
+                });
+                return this;
+            };
+
+            this.addForm = function () {
+                var index = this.collectionHolder.data('index');
+                var prototype = this.collectionHolder.data('prototype');
+                var reg = new RegExp(this.prototypeName, "g");
+                var newForm = $('<li></li>');
+                newForm.append(prototype.replace(reg, index));
+                newForm.append('<a href="#" class="remove">x</a>');
+                this.collectionHolder.data('index', index + 1);
+                this.collectionHolder.append(newForm);
+                this.removeFormEvent();
+                this.addBindForm(this.name + "_" + index);
+            };
+
+            this.addBindForm = function (element) {
+                if (this.formBind !== undefined) {
+                    this.formBind.setElement('#' + element + "_" + this.formBind.getName());
+                    this.formBind.build();
+                }
+            };
+
+            this.bind = function (formBind) {
+                this.formBind = formBind;
+                this.formBind.isBindForm = true;
+            };
+
+            this.createLink = function (nameLink, classLink) {
+                var addLink = $('<a href="#" class="' + classLink + '">' + nameLink + '</a>');
+                var newLinkLi = $('<li></li>').append(addLink);
+                return newLinkLi;
+            };
+
+            this.removeFormEvent = function () {
+                $('.remove').on('click', function (e) {
+                    e.preventDefault();
+                    $(this).parent().remove();
+                    return false;
+                });
+            };
+        }
+
+        var form = new Form();
+        form.setElement('ul.categories')
+                .setName('itechsup_bundle_questionnairebundle_edit_questionnaire_categories')
+                .setPrototypeName('__categories_prot__')
+                .build();
+
+        var form2 = new Form();
+        form2.setName('questions')
+                .setPrototypeName('__questions_prot__');
+
+        form.bind(form2);
+
+    </script>
+{% endblock %}
