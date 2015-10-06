@@ -106,4 +106,11 @@ class Categorie
         return $this->questions;
     }
 
+    public function createEmptyReponse(User $user)
+    {
+        foreach ($this->questions as $question) {
+            $question->createEmptyReponse($user);
+        }
+    }
+
 }

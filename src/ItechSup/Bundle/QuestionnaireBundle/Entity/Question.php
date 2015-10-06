@@ -102,7 +102,7 @@ class Question
 
     public function hasReponseUser($userId)
     {
-        return $this->reponses->exists(function ($key, $value) use ($userId) {
+        return $this->reponses->exists(function ($value) use ($userId) {
                     return $value->getUser()->getId() == $userId;
                 });
     }
@@ -115,6 +115,22 @@ class Question
     public function setCategorie(Categorie $categorie)
     {
         $this->categorie = $categorie;
+    }
+
+    public function createEmptyReponse(User $user)
+    {
+        $reponse = new Reponse();
+        $reponse->setUser($user);
+        $this->addReponse($reponse);
+    }
+
+    public function averageOfReponses()
+    {
+        $total = 0;
+        foreach ($this->reponses as $reponse) {
+            $total += $reponse->getScore();
+        }
+        return $total / $this->reponses->count();
     }
 
 }

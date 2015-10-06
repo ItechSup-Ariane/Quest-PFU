@@ -13,7 +13,7 @@
                 {% for questionnaire in questionnaires %}
                     <tr>
                         <td>{{questionnaire.title()}}</td>
-                        <td><a href="{{path('itechsup_questionnaire_questionnaire_editquestionnaire',{'questionnaire':questionnaire.id}) }}" >Repondre au questionnaire</a></td>
+                        <td><a href="{{path('itechsup_questionnaire_questionnaire_editquestionnaire',{'idQuestionnaire':questionnaire.id}) }}" >Repondre au questionnaire</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

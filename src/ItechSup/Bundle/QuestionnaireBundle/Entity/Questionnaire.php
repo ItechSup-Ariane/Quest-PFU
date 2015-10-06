@@ -77,4 +77,11 @@ class Questionnaire
         return $this->categories->toArray();
     }
 
+    public function createEmptyReponse(User $user)
+    {
+        foreach ($this->categories as $categorie) {
+            $categorie->createEmptyReponse($user);
+        }
+    }
+
 }

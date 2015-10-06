@@ -3,6 +3,8 @@
     <h1>Ajouter un catégorie</h1>
     {{ form_start(formQuestinnaire) }}
     <ul class="categories" data-prototype="{{ form_widget(formQuestinnaire.categories.vars.prototype)|e }}" >
+        {% for categorie in formQuestinnaire.categories %}
+        {% endfor %}
     </ul>
     <input type="submit" value="Créer" class="btn btn-success pull-right" />
     {{ form_end(formQuestinnaire) }}

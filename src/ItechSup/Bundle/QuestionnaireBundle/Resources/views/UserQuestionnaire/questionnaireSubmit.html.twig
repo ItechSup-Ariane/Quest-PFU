@@ -1,24 +1,15 @@
 {% extends 'ItechSupQuestionnaireBundle::layout.html.twig'%}
 {% block content %}
-    <h1>Liste des questionnaire</h1>
-    {% if not questionnaires is empty %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom du questionnaire</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for questionnaire in questionnaires %}
-                    <tr>
-                        <td>{{questionnaire.title()}}</td>
-                        <td><a href="{{path('itechsup_questionnaire_userquestionnaire_quetionnairesubmit',{'questionnaire':questionnaire.id}) }}" >Détails</a></td>
-                    </tr>
+    <h1>{{questionnaire.title()}}</h1>
+    <ul>
+        {% for categorie in questionnaire.categories %}
+            <li>{{categorie.title()}}</li>
+            <ul>
+                {% for question in categorie.questions %}
+                    <li>{{question.title()}}</li>
+                    <li>{{question.averageOfReponses()}}</li>
                 {% endfor %}
-            </tbody>
-        </table>
-    {% else%}
-        <p>Aucun questionnaire disponnible</p>
-    {% endif %}
+            </ul>
+        {% endfor %}
+    </ul>
 {% endblock %}

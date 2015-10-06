@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class QuestionnaireRepository extends EntityRepository
 {
 
-    public function questionnaireByUserWithoutReponse($userId)
+    public function questionnairesByUserWithoutReponse($userId)
     {
         $query = $this->createQueryBuilder('q')
                 ->join("q.categories", "c")
@@ -24,6 +24,21 @@ class QuestionnaireRepository extends EntityRepository
                 ->setParameter("userId", $userId)
                 ->getQuery();
         return $query->getResult();
+    }
+
+    public function questionnaireByUserWithoutReponse($idQuestionnaire,$userId)
+    {
+        $query = $this->createQueryBuilder('q')
+                ->join("q.categories", "c")
+                ->join("c.questions", "cq")
+                ->leftJoin("cq.reponses", "r")
+                ->where("r.user != :userId")
+                ->orWhere("r.user IS NULL")
+               ->andWhere("q.id = :idQuestionnaire")
+                ->setParameter("userId", $userId)
+                ->setParameter("idQuestionnaire", $idQuestionnaire)
+                ->getQuery();
+        return $query->getOneOrNullResult();
     }
 
     public function listQuestionnairesSubmit()
